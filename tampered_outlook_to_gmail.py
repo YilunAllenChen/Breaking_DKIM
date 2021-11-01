@@ -3,15 +3,12 @@ Scenario:
 - We have a valid, DKIM-signed email from DHL. We wanted to see if we can spoof DHL's identity by:
     - Attempt to modify the content that will be rendered on the email client.
     - Avoid invalidating the original DKIM signature.
+- We have made modifications to the email: we have added additional Subject, From, Body and such, 
+    in the hope that we can make the email appear to be coming from elsewhere while retaining the
+    validity of DKIM.
 
 Findings: 
-- Google has implemented a mechanism to wrap the original email and append numerous Google-unique attributes 
-    like X-Gm-Message-State, X-Google-Smtp-Source and X-Google-DKIM-Signature. All of the original senders' 
-    information is also wrapped. For example, if you claim to be DHL in the "from" field, even if the <>-enclosed
-    email is from DHL, Google will modify it to be from the gmail address that you are sending this from. That means,
-    if you are sending an email from spoofer@gmail.com and claiming in the email that you are DHL Support from 
-    DHLSupport@dhl.com, what appears on the receiver's client will be DHL Support <spoofer@gmail.com>.
-- 
+- Email was rejected immediately at send-time as it cannot get pass the SPF check.
 
 Author: Allen Chen
 """
